@@ -58,6 +58,7 @@ replyWinLoss = async (msg) => {
 }
 
 var mmr = 0;
+const targetMmr = 1760;
 var replyId = 0;
 var channelId = 0;
 
@@ -81,6 +82,6 @@ replyToStartMmr = (msg) => {
         });
 }
 
-formatMmr = () => `MMR: ${mmr}, Gap: ${mmr}`;
+formatMmr = () => `MMR: ${mmr}, Gap: ${targetMmr - mmr}`;
 
 client.login(process.env.DISCORD_TOKEN);

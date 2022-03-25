@@ -31,11 +31,13 @@ client.on('message', msg => {
 
     if (messageContent === commands.win) {
         wins++;
+        mmr += 20;
         replyWinLoss(msg);
     }
 
     if (messageContent === commands.loss) {
         losses++;
+        mmr -= 20;
         replyWinLoss(msg);
     }
 
@@ -44,12 +46,15 @@ client.on('message', msg => {
     }
 });
 
-replyWinLoss = (msg) => {
-    msg.reply(`Wins: ${wins}, Losses: ${losses}`)
+replyWinLoss = async (msg) => {
+    channel = client.channels.cache.get(channelId)
+    message = channel.messages.fetch(replyId)
+        .then(editMsg => editMsg.edit(`MMR: ${mmr}, Gap: ${mmr}`))
 }
 
 var mmr = 0;
 var replyId = 0;
+var channelId = 0;
 
 replyToStartMmr = (msg) => {
     content = msg.content.slice(commands.startMmr.length + prefix.length);
@@ -66,6 +71,8 @@ replyToStartMmr = (msg) => {
         .then((reply) => {
             replyId = reply.id;
             console.log('setting reply id:', replyId)
+            channelId = reply.channelId;
+            console.log('setting channel id:', channelId)
         });
 }
 

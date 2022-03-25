@@ -73,7 +73,7 @@ replyToStartMmr = (msg) => {
     }
 
     mmr = startingValue;
-    msg.reply(`MMR: ${mmr}, Gap: ${mmr}`)
+    msg.reply(formatMmr())
         .then((reply) => {
             replyId = reply.id;
             console.log('setting reply id:', replyId)

@@ -9,4 +9,4 @@
 ### Dev Commands
 
 - `npm run start` - start locally
-- `git push heroku master` - push to heroku (may need to run on the web dyno it's currently off)
+- `git push heroku main` - push to heroku (may need to run on the web dyno it's currently off)

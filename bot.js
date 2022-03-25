@@ -18,6 +18,7 @@ const commands = {
     win: "win",
     loss: "loss",
     startMmr: "startmmr",
+    update: "update",
 }
     
 client.on('message', msg => {
@@ -44,12 +45,16 @@ client.on('message', msg => {
     if (messageContent.startsWith(commands.startMmr)) {
         replyToStartMmr(msg);
     }
+
+    if (messageContent === commands.update) {
+        msg.reply(formatMmr())
+    }
 });
 
 replyWinLoss = async (msg) => {
     channel = client.channels.cache.get(channelId)
     message = channel.messages.fetch(replyId)
-        .then(editMsg => editMsg.edit(`MMR: ${mmr}, Gap: ${mmr}`))
+        .then(editMsg => editMsg.edit(formatMmr()))
 }
 
 var mmr = 0;
@@ -75,5 +80,7 @@ replyToStartMmr = (msg) => {
             console.log('setting channel id:', channelId)
         });
 }
+
+formatMmr = () => `MMR: ${mmr}, Gap: ${mmr}`;
 
 client.login(process.env.DISCORD_TOKEN);

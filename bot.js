@@ -4,9 +4,25 @@ require('dotenv').config();
 const Discord = require('discord.js');
 const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES"] })
 
-client.on('ready', () => {
-  console.log(`Logged in as ${client.user.tag}!`);
+var mmr = 0;
+const targetMmr = 1760;
+var replyId = 0;
+var channelId = 0;
+
+client.on('ready', async () => {
+    console.log(`Logged in as ${client.user.tag}!`);
+    var pinnedMessages = await fetchPinned();
+    pinnedMessages.forEach(msg => {
+        var lowerCaseMsg = msg.content.toLowerCase();
+        if (lowerCaseMsg.includes("mmr")) {
+            mmr = lowerCaseMsg.subString(lowerCaseMsg.indexOf(":") + 2, ",").toInt();
+            replyId = msg.id
+            return;
+        }
+    });
 });
+
+
 
 const prefix = "!";
 
@@ -15,32 +31,48 @@ var losses = 0;
 
 const commands = {
     ping: "ping",
-    win: "win",
-    loss: "loss",
+    partyW: "partyw",
+    partyL: "partyl",
+    w: "w",
+    l: "l",
     startMmr: "startmmr",
     update: "update",
 }
-    
+
 client.on('message', msg => {
     if (!msg.content.startsWith(prefix) || msg.author.bot) return;
 
     const messageContent = msg.content.slice(prefix.length).toLowerCase();
 
+
     if (messageContent === commands.ping) {
         msg.reply('pong');
     }
 
-    if (messageContent === commands.win) {
+    if (messageContent === commands.partyW) {
         wins++;
         mmr += 20;
         replyWinLoss(msg);
     }
 
-    if (messageContent === commands.loss) {
+    if (messageContent === commands.partyL) {
         losses++;
         mmr -= 20;
         replyWinLoss(msg);
     }
+
+    if (messageContent === commands.w) {
+        wins++;
+        mmr += 30;
+        replyWinLoss(msg);
+    }
+
+    if (messageContent === commands.l) {
+        losses++;
+        mmr -= 30;
+        replyWinLoss(msg);
+    }
+
 
     if (messageContent.startsWith(commands.startMmr)) {
         replyToStartMmr(msg);
@@ -57,10 +89,7 @@ replyWinLoss = async (msg) => {
         .then(editMsg => editMsg.edit(formatMmr()))
 }
 
-var mmr = 0;
-const targetMmr = 1760;
-var replyId = 0;
-var channelId = 0;
+
 
 replyToStartMmr = (msg) => {
     content = msg.content.slice(commands.startMmr.length + prefix.length);
@@ -79,6 +108,7 @@ replyToStartMmr = (msg) => {
             console.log('setting reply id:', replyId)
             channelId = reply.channelId;
             console.log('setting channel id:', channelId)
+            reply.pin();
         });
 }
 

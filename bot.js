@@ -17,7 +17,11 @@ client.on('ready', async () => {
     pinnedMessages.forEach(msg => {
         var lowerCaseMsg = msg.content.toLowerCase();
         if (lowerCaseMsg.includes("mmr")) {
-            mmr = parseInt(lowerCaseMsg.substring(lowerCaseMsg.indexOf(":") + 2, lowerCaseMsg.indexOf(",")));
+            try {
+                mmr = parseInt(lowerCaseMsg.substring(lowerCaseMsg.indexOf(":") + 2, lowerCaseMsg.indexOf(",")));
+            } catch (error) {
+                console.error(error);
+            }
             replyId = msg.id
             return;
         }

@@ -7,11 +7,13 @@ const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES"] })
 var mmr = 0;
 const targetMmr = 1760;
 var replyId = 0;
-var channelId = 223407077203116032;
+// hard coded to general in my test server for now
+var channelId = '956979616948563981';
 
 client.on('ready', async () => {
     console.log(`Logged in as ${client.user.tag}!`);
-    var pinnedMessages = await fetchPinned();
+    var channel = await client.channels.fetch(channelId);
+    var pinnedMessages = await channel.messages.fetchPinned();
     pinnedMessages.forEach(msg => {
         var lowerCaseMsg = msg.content.toLowerCase();
         if (lowerCaseMsg.includes("mmr")) {

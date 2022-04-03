@@ -7,7 +7,7 @@ const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES"] })
 var mmr = 0;
 const targetMmr = 1760;
 var replyId = 0;
-var channelId = 0;
+var channelId = 223407077203116032;
 
 client.on('ready', async () => {
     console.log(`Logged in as ${client.user.tag}!`);

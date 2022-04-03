@@ -2,8 +2,10 @@
 
 ### Commands
 - `!startMmr [int]` set the starting message and mmr
-- `!win` add a win
-- `!loss` add a loss
+- `!partyw` add a party win
+- `!partyl` add a party loss 
+- `!w` add a win
+- `!l` add a loss
 - `!update` reprint an update (not updated with new wins)
 
 ### Dev Commands

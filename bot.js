@@ -8,7 +8,7 @@ var mmr = 0;
 const targetMmr = 1760;
 var replyId = 0;
 // hard coded to general in my test server for now
-var channelId = '956979616948563981';
+var channelId = process.env.CHANNELID;
 
 client.on('ready', async () => {
     console.log(`Logged in as ${client.user.tag}!`);
@@ -112,8 +112,6 @@ replyToStartMmr = (msg) => {
         .then((reply) => {
             replyId = reply.id;
             console.log('setting reply id:', replyId)
-            channelId = reply.channelId;
-            console.log('setting channel id:', channelId)
             reply.pin();
         });
 }

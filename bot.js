@@ -7,7 +7,7 @@ const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES"] })
 var mmr = 0;
 const targetMmr = 1760;
 var replyId = 0;
-// hard coded to general in my test server for now
+var hasFinished = false;
 var channelId = process.env.CHANNELID;
 
 client.on('ready', async () => {
@@ -86,6 +86,12 @@ client.on('message', msg => {
 
     if (messageContent === commands.update) {
         msg.reply(formatMmr())
+        if (!hasFinished && mmr >= targetMmr) {
+            msg.reply(`https://media.giphy.com/media/kyLYXonQYYfwYDIeZl/giphy.gif`);
+            msg.reply(`https://media.giphy.com/media/H4hIkEFF1fWpwNCm49/giphy.gif`);
+            msg.reply(`https://media.giphy.com/media/3oz9ZE2Oo9zRC/giphy.gif`);
+            hasFinished = true;
+        }
     }
 });
 
